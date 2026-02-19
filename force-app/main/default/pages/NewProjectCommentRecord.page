@@ -1,0 +1,44 @@
+<apex:page standardController="Project_Comment__c" extensions="ProjectCommentExtension" standardStylesheets="true">
+    Test Table below.
+    <apex:form id="stakeForm">
+        <!-- JS-callable AJAX function that can invoke controller actions/functions. 
+         toggleRow is like the ajax function and applyRecipients is the apex binding -->
+        <apex:actionFunction name="toggleRow" action="{!applyRecipients}" reRender="flowPanel,recipientPanel">
+            <!-- Parameters inside the actionFunction (toggleRow). When toggle row
+             is called from JS, VF assigns the param values to those controller properties before invoking applyRecipients -->
+            <apex:param name="toggledId" assignTo="{!lastToggledRowId}" value=""/>
+            <apex:param name="toggledValue" assignTo="{!lastToggledRowValue}" value=""/>
+        </apex:actionFunction>
+        <!-- Pageblock is like div for SF? -->
+        <apex:pageBlock title="Project Stakeholders">
+            <apex:pageBlockTable value="{!stakeholderRows}" var="row">
+            <apex:column >
+                <!-- Instead of calling the `toggleRow` action function directly, if there
+                 are additional processing needed, we can pass through via JS function
+                 by adding a <script> tag -->
+                 <apex:inputCheckbox value="{!row.selected}" onchange="toggleRow('{!row.id}', this.checked)" />
+            </apex:column>
+            <apex:column headerValue="Name">
+                {!row.name}
+            </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+
+    <p> 
+        Flow code below. Passing the recipientList from the project comment extension controller via apex:param
+    </p>
+    <apex:outputPanel id="flowPanel">
+        <p>
+            Controller: {!recipientList}
+        </p>
+        <p>
+            Object: {!Project_Comment__c.Recipient_List__c}
+        </p>
+        <flow:interview name="Project_Comment_Test_1" finishLocation="{! '/' + Project_Comment__c.Project__c}">
+            <apex:param name="New_or_Edit" value="New"/>
+            <apex:param name="ProjectId" value="{!Project_Comment__c.Project__c}"/>
+            <apex:param name="RecipientList" value="{!recipientList}"/>
+        </flow:interview>
+    </apex:outputPanel>
+</apex:page>
