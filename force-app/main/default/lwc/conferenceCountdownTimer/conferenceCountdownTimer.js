@@ -77,4 +77,14 @@ export default class ConferenceCountdownTimer extends LightningElement {
         if (seconds || parts.length === 0) parts.push(`${seconds}s`);
         return parts.join(' ');
     }
+
+    get containerClass() {
+        if (!this.conferenceStartDateTime || !this.conferenceEndDateTime) {
+            return 'countdown-container loading';
+        }
+        if (this.countdownText === 'Conference has ended' || this.countdownText === 'Conference dates unavailable') {
+            return 'countdown-container ended';
+        }
+        return 'countdown-container';
+    }
 }
