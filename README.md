@@ -81,7 +81,7 @@ This becomes the core "automation" component of your project since Flow has been
 **3. Apex Class (Asynchronous):**
 
 - **Challenge:** Data cleanup.
-- **Solution:** Write a Scheduled Apex class (Batchable) that runs every weekend to find "Draft" tickets that haven't been modified in 30 days and changes their status to "Expired."
+- **Solution:** Write a Scheduled Apex class (Batchable) that runs every weekend to find "Pending" tickets that haven't been modified in 30 days and changes their status to "Refunded"
 
 
 **4. Lightning Web Component (LWC):**
